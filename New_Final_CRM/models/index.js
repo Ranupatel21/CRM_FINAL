@@ -1,31 +1,40 @@
-module.exports = {
-  Lead: require("./lead.model").default,
-  Vehicle: require("./vehicle.model"), 
-  Booking: require("./booking.model"),
-  Quotation: require("./quotation.model"),
-  TestDrive: require("./testdrive.model").default,
+import Lead from "./lead.model.js";
+import Vehicle from "./vehicle.model.js";
+import Booking from "./booking.model.js";
+import Quotation from "./quotation.model.js";
+import TestDrive from "./testdrive.model.js";
+import Inventory from "./inventory.model.js";
+
+export {
+  Lead,
+  Vehicle,
+  Booking,
+  Quotation,
+  TestDrive,
+  Inventory
 };
-import express from "express";
-import { Lead } from "../models/lead.model.js";
 
-const router = express.Router();
+ //import express from "express";
+// import { Lead } from "../models/lead.model.js";
 
-// ✅ GET ROUTE (This fixes "Cannot GET /api/leads")
-router.get("/", async (req, res) => {
-  try {
-    const leads = await Lead.find();
-    res.json(leads);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// const router = express.Router();
 
-// ✅ POST ROUTE
-router.post("/", async (req, res) => {
-  try {
-    const lead = await Lead.create(req.body);
-    res.json(lead);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// // ✅ GET ROUTE (This fixes "Cannot GET /api/leads")
+// router.get("/", async (req, res) => {
+//   try {
+//     const leads = await Lead.find();
+//     res.json(leads);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // ✅ POST ROUTE
+// router.post("/", async (req, res) => {
+//   try {
+//     const lead = await Lead.create(req.body);
+//     res.json(lead);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
