@@ -5,6 +5,9 @@
  import express from "express";
  import cors from "cors";
  import mongoose from "mongoose";
+ import dotenv from "dotenv";
+ dotenv.config();
+
  import leadRoutes from "./routes/lead.routes.js";
  import vehicleRoutes from "./routes/vehicle.routes.js";
  import bookingRoutes from "./routes/booking.routes.js";

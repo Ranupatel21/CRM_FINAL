@@ -11,6 +11,20 @@ const LeadSchema = new Schema({
     enum: ["New", "Contacted", "Proposal", "Won", "Lost"],
     default: "New",
   },
+  phone : {
+     type: String,
+     required: true,
+     trim: true,
+  },
+   color: {
+      type: String, // eg: Red, White, Black
+      trim: true,
+  },
+     model: {
+      type: String, // eg: Swift, Baleno, Creta
+      trim: true,
+  },
+
   assignedToId: String,
   lastActivity: String,
   nextFollowUp: String,
