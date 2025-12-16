@@ -4,14 +4,15 @@ import Booking from "./booking.model.js";
 import Quotation from "./quotation.model.js";
 import TestDrive from "./testdrive.model.js";
 import Inventory from "./inventory.model.js";
-
+import Finanace from "./finance.model.js"
 export {
   Lead,
   Vehicle,
   Booking,
   Quotation,
   TestDrive,
-  Inventory
+  Inventory,
+  Finanace
 };
 
  //import express from "express";

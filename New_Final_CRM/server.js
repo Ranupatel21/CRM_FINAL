@@ -14,7 +14,7 @@
  import quotationRoutes from "./routes/quotation.routes.js";
  import testDriveRoutes from "./routes/testdrive.routes.js";
  import inventoryRoutes from "./routes/inventory.routes.js";
-
+ import finanaceRoutes from "./routes/finance.routes.js";
 
 
 
@@ -43,7 +43,7 @@
  app.use("/api/quotations", quotationRoutes);
  app.use("/api/testdrives", testDriveRoutes);
  app.use("/api/inventory", inventoryRoutes);
- 
+ app.use("/api/finance", finanaceRoutes);
  const PORT = process.env.PORT || 5000;
  app.listen(PORT, () => {
   console.log(`✅ Server running at: http://localhost:${PORT}`);
