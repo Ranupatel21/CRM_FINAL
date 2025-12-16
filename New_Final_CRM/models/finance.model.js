@@ -112,6 +112,11 @@ const commissionSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    relatedInvoice: {
+     type: mongoose.Schema.Types.ObjectId,
+     ref: "Invoice" // EXACT model name
+    },
+
 
     status: {
       type: String,
@@ -126,4 +131,5 @@ const commissionSchema = new mongoose.Schema(
 export const Invoice = mongoose.model("Invoice", invoiceSchema);
 export const Loan = mongoose.model("Loan", loanSchema);
 export const Commission = mongoose.model("Commission", commissionSchema);
+
 
