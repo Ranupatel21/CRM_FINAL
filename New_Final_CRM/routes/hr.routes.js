@@ -4,7 +4,7 @@ import { allowRoles } from "../middlewares/role.middleware.js";
 import { mockAuth } from "../middlewares/mockAuth.middleware.js";
 const router = express.Router();
 // create employee registeration from
-router.post("/employee",async (req , res) => {
+/*router.post("/employee",async (req , res) => {
     try {
         const employee = await Employee.create(req.body);
         res.status(201).json(employee);
@@ -12,7 +12,7 @@ router.post("/employee",async (req , res) => {
     catch (err){ 
         res.status(400).json({error: err.messege});
     }
-} );
+} );*/
 
 // Get all employee
 router.get("/employee", async (req, res) => {
