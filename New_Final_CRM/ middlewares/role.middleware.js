@@ -1,3 +1,4 @@
+console.log("ROLE MIDDLEWARE LOADED");
 
 export const allowRoles = (...allowedRoles) => {
   return (req, res, next) => {
