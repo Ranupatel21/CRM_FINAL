@@ -15,7 +15,7 @@
  import testDriveRoutes from "./routes/testdrive.routes.js";
  import inventoryRoutes from "./routes/inventory.routes.js";
  import finanaceRoutes from "./routes/finance.routes.js";
-
+ import hrRoutes from "./routes/hr.routes.js";
 
 
  const app = express();
@@ -44,6 +44,7 @@
  app.use("/api/testdrives", testDriveRoutes);
  app.use("/api/inventory", inventoryRoutes);
  app.use("/api/finance", finanaceRoutes);
+ app.use("/api/hr", hrRoutes);
  const PORT = process.env.PORT || 5000;
  app.listen(PORT, () => {
   console.log(`✅ Server running at: http://localhost:${PORT}`);
