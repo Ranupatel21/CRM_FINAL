@@ -58,7 +58,7 @@ router.get("/employee/tech", async (req, res) => {
 
 // admin role 
 // Admin only
-router.post(
+/*router.post(
   "/employee",
   mockAuth,
   allowRoles("Admin"),
@@ -66,7 +66,7 @@ router.post(
     const emp = await Employee.create(req.body);
     res.json(emp);
   }
-);
+);*/
 
 // Admin + Manager
 router.get(
@@ -78,4 +78,18 @@ router.get(
     res.json(data);
   }
 );
+router.post(
+  "/employee",
+  mockAuth,
+  allowRoles("Admin"),
+  async (req, res) => {
+    console.log("POST HIT");
+    console.log("USER:", req.user);
+    console.log("BODY:", req.body);
+
+    const emp = await Employee.create(req.body);
+    res.json(emp);
+  }
+);
+
 export default router;
