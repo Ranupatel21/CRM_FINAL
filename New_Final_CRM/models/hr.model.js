@@ -29,7 +29,7 @@ const employeeShema = new mongoose.Schema({
     role : {
         type : String,
         enum : ["Admin","Manager","Employee"],
-        default : Employee
+        default : "Employee"
     },
     joiningDate : {
         type : Date,
@@ -38,7 +38,7 @@ const employeeShema = new mongoose.Schema({
     status : {
         type : String,
         enum : ["Active","Resigned"],
-        default : Active
+        default : "Active"
 
     } 
 }, 
