@@ -1,8 +1,10 @@
-
 export const mockAuth = (req, res, next) => {
-  // temporary testing
-  req.user = {
-    role: req.headers.role || "Admin"
-  };
+  const role = req.headers.role;
+
+  if (!role) {
+    return res.status(401).json({ error: "Role header missing" });
+  }
+
+  req.user = { role };
   next();
 };
