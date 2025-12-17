@@ -31,12 +31,12 @@ router.get("/invoice/paid", async (req, res) => {
   res.json(Invoices);
 });
 // Get overdue invoices
-router.get("/invoice/overdue", async (res,req) => {
+router.get("/invoice/overdue", async (req,res) => {
   const Invoices = await Invoice.find({ status : "Overdue"});
   res.json(Invoices);
 });
 // Get pending invoices
-router.get("./invoice/pending", async (res, req) => {
+router.get("./invoice/pending", async (req, res) => {
   const invoices = await Invoice.find({ status : "Pending"});
   res.json(invoices);
 });
