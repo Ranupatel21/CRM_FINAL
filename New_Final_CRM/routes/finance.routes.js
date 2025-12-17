@@ -36,7 +36,7 @@ router.get("/invoice/overdue", async (req,res) => {
   res.json(Invoices);
 });
 // Get pending invoices
-router.get("./invoice/pending", async (req, res) => {
+router.get("/invoice/pending", async (req, res) => {
   const invoices = await Invoice.find({ status : "Pending"});
   res.json(invoices);
 });
