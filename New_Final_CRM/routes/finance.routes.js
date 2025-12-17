@@ -25,7 +25,21 @@ router.get("/invoice", async (req, res) => {
 //   res.json(invoices);
 // });
 
-
+// Get Paid invoices
+router.get("/invoice/paid", async (req, res) => {
+  const Invoices = await Invoice.find({ status: "Paid" });
+  res.json(Invoices);
+});
+// Get overdue invoices
+router.get("/invoice/overdue", async (res,req) => {
+  const Invoices = await Invoice.find({ status : "Overdue"});
+  res.json(Invoices);
+});
+// Get pending invoices
+router.get("./invoice/pending", async (res, req) => {
+  const invoices = await Invoice.find({ status : "Pending"});
+  res.json(invoices);
+});
 
 // Update Invoice
 router.put("/invoice/:id", async (req, res) => {
