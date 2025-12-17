@@ -16,18 +16,18 @@ const employeeShema = new mongoose.Schema({
         required : true
     },
     phone : {
-        type : string
+        type : String
     },
     department : {
-         type : string,
+         type : String,
          enum : ["HR","Sales","Finance","Tech"],
          required : true
     },
     degination : {
-        type : string
+        type : String
     },
     role : {
-        type : string,
+        type : String,
         enum : ["Admin","Manager","Employee"],
         default : Employee
     },
@@ -36,7 +36,7 @@ const employeeShema = new mongoose.Schema({
         required : true
     },
     status : {
-        type : string,
+        type : String,
         enum : ["Active","Resigned"],
         default : Active
 
