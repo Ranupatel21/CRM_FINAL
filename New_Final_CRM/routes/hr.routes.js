@@ -21,40 +21,46 @@ const router = express.Router();
 // });
 
 // // update employee
-// router.put("/employee/:id", async (req , res) => {
-//     const employee = await Employee.findByIdAndUpdate(
-//         req.params.id,
-//         req.body,
-//         {new : true}
-//     );
-//     res.json(employee);
-// });
+ router.put("/employee/:id",
+ mockAuth,
+ allowRoles("Admin","Manager"),
+  async (req , res) => {
+     const employee = await Employee.findByIdAndUpdate(
+         req.params.id,
+         req.body,
+         {new : true}
+     );
+     res.json(employee);
+ });
 
 // // delete employee
-// router.delete("/employee/:id", async (req, res) =>{
-//     await Employee.findByIdAndUpdate(req.params.id);
-//     res.json({messege : "employee deleted"});
-// });
+ router.delete("/employee/:id",
+ mockAuth,
+ allowRoles("Admin","manager"),
+ async (req, res) =>{
+     await Employee.findByIdAndUpdate(req.params.id);
+     res.json({messege : "employee deleted"});
+ });
 // // Hr department employee
-// router.get("/employee/hr", async (req, res) =>{
-//     const employee = await Employee({ status : "HR" });
-//     res.json(employee);
-// });
+router.get("/employee/hr", async (req, res) =>{
+     const employee = await Employee({ status : "HR" });
+    res.json(employee);
+});
 // //  sales department employee
-// router.get("/employee/sales", async (req , res) => {
-//     const employee = await Employee ({ status : "Sales" });
-//     res.json(employee);
-// });
+router.get("/employee/sales", async (req , res) => {
+ const employee = await Employee ({ status : "Sales" });
+     res.json(employee);
+ });
 // // finance department employee
-// router.get("/employee/finance", async (req, res) => {
-//     const employee = await Employee ({ status : "Finance"});
-//     res.json(employee);
-// });
+router.get("/employee/finance", async (req, res) => {
+     const employee = await Employee ({ status : "Finance"});
+    res.json(employee);
+   });
 // // tech department
-// router.get("/employee/tech", async (req, res) => {
-//     const employee = await Employee ({ status : "Tech"});
-//     res.json(employee);
-// });
+router.get("/employee/tech", async (req, res) => {
+     const employee = await Employee ({ status : "Tech"});
+    res.json(employee);
+});
 
 // admin role 
 // Admin only
