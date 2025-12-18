@@ -1,10 +1,14 @@
 export const mockAuth = (req, res, next) => {
-  const role = req.headers.role;
-
-  if (!role) {
-    return res.status(401).json({ error: "Role header missing" });
+  try {
+    // header ho ya na ho, admin maan lo
+    req.user = {
+      id: "mock-user",
+      role: "Admin"
+    };
+    next();
+  } catch (err) {
+    console.error("Mock auth error:", err);
+    return res.status(401).json({ message: "Unauthorized" });
   }
-
-  req.user = { role };
-  next();
 };
+

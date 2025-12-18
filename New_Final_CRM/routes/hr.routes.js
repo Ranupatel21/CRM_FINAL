@@ -78,18 +78,42 @@ router.get(
     res.json(data);
   }
 );
+
 router.post(
   "/employee",
   mockAuth,
   allowRoles("Admin"),
   async (req, res) => {
-    console.log("POST HIT");
-    console.log("USER:", req.user);
-    console.log("BODY:", req.body);
+    try {
+      console.log("POST HIT");
+      console.log("USER:", req.user);
+      console.log("BODY:", req.body);
 
-    const emp = await Employee.create(req.body);
-    res.json(emp);
+      const emp = await Employee.create(req.body);
+      return res.status(201).json(emp);
+
+    } catch (error) {
+      console.error("EMPLOYEE CREATE ERROR:", error);
+      return res.status(400).json({
+        message: "Employee create failed",
+        error: error.message
+      });
+    }
   }
 );
+
+// router.post(
+//   "/employee",
+//   mockAuth,
+//   allowRoles("Admin"),
+//   async (req, res) => {
+//     console.log("POST HIT");
+//     console.log("USER:", req.user);
+//     console.log("BODY:", req.body);
+
+//     const emp = await Employee.create(req.body);
+//     res.json(emp);
+//   }
+// );
 
 export default router;

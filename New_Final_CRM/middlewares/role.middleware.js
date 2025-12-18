@@ -1,15 +1,13 @@
 console.log("ROLE MIDDLEWARE LOADED");
 
-export const allowRoles = (...allowedRoles) => {
-  return (req, res, next) => {
-    const userRole = req.user?.role;
+ export const isAdmin = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "User missing" });
+  }
 
-    if (!allowedRoles.includes(userRole)) {
-      return res.status(403).json({
-        error: "Access denied"
-      });
-    }
+  if (req.user.role !== "Admin") {
+    return res.status(403).json({ message: "Access denied" });
+  }
 
-    next();
-  };
+  next();
 };
