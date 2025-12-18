@@ -38,7 +38,7 @@ const router = express.Router();
  mockAuth,
  allowRoles("Admin","manager"),
  async (req, res) =>{
-     await Employee.findByIdAndUpdate(req.params.id);
+     await Employee.findByIdAndDelete(req.params.id);
      res.json({messege : "employee deleted"});
  });
 // // Hr department employee
