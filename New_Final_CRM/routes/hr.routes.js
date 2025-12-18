@@ -28,7 +28,7 @@ const router = express.Router();
      const employee = await Employee.findByIdAndUpdate(
          req.params.id,
          req.body,
-         {new : true}
+         {new : true, runValidators: true }
      );
      res.json(employee);
  });
