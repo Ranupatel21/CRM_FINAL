@@ -1,4 +1,4 @@
-import { Car } from "../models/car.model";
+import { Car } from "../models/car.model.js";
 
 router.get("/brands", async (req, res) => {
   res.json(await VehicleMaster.distinct("brand"));
