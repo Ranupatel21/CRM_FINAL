@@ -1,51 +1,51 @@
 import express from "express";
 import { Booking } from "../models/booking.model.js";
-import { Inventory } from "../models/inventory.model.js";
-
+import {Cars} from "../models/car.model.js"
 const router = express.Router();
 
-//  CREATE BOOKING
-
-router.post("/", async (req, res) => {
-  try {
-    const { brand, model, variant, color } = req.body;
-
-    const stock = await Inventory.findOne({
-      brand,
-      model,
-      variant,
-      color,
-      quantity: { $gt: 0 }
-    });
-
-    if (!stock) {
-      return res.status(400).json({
-        message: "Selected vehicle is out of stock"
-      });
-    }
-
-    const createdBooking = await Booking.create(req.body);
-
-    stock.quantity -= 1;
-    await stock.save();
-
-    res.status(201).json(createdBooking);
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-//  GET ALL BOOKINGS
-router.get("/", async (req, res) => {
-  try {
-    const allBookings = await Booking.find();
-    res.status(200).json(allBookings);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Brand dropdown
+router.get("/cars/brands", async (req, res) => {
+  const brands = await Cars.distinct("brand");
+  res.json(brands);
 });
 
+// Model dropdown
+router.get("/cars/models", async (req, res) => {
+  const { brand } = req.query;
+  const models = await Cars.distinct("model", { brand });
+  res.json(models);
+});
 
+// Variant dropdown
+router.get("/cars/variants", async (req, res) => {
+  const { brand, model } = req.query;
+  const variants = await Cars.distinct("variant", { brand, model });
+  res.json(variants);
+});
+
+// Color dropdown
+router.get("/cars/colors", async (req, res) => {
+  const { brand, model, variant } = req.query;
+  const colors = await Cars.distinct("color", {
+    brand,
+    model,
+    variant
+  });
+  res.json(colors);
+});
+// Get all Bookings
+router.get("/bookings", async (req, res) => {
+  const allBookings = await Booking.find()
+  res.json(allBookings);
+});
+
+// Create booking
+router.post("/bookings", async (req, res) => {
+  const booking = await Booking.create(req.body);
+  res.status(201).json(booking);
+});
 
 export default router;
+
+
 

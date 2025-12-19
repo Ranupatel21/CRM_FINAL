@@ -11,6 +11,7 @@
  import leadRoutes from "./routes/lead.routes.js";
  import vehicleRoutes from "./routes/vehicle.routes.js";
  import bookingRoutes from "./routes/booking.routes.js";
+ import carRoutes from "./routes/car.routes.js";
  import quotationRoutes from "./routes/quotation.routes.js";
  import testDriveRoutes from "./routes/testdrive.routes.js";
  import inventoryRoutes from "./routes/inventory.routes.js";
@@ -40,6 +41,7 @@
  app.use("/api/leads", leadRoutes);
  app.use("/api/vehicles", vehicleRoutes);
  app.use("/api/bookings", bookingRoutes);
+ app.use("/api/cars", carRoutes);
  app.use("/api/quotations", quotationRoutes);
  app.use("/api/testdrives", testDriveRoutes);
  app.use("/api/inventory", inventoryRoutes);

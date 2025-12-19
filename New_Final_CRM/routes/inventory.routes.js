@@ -65,32 +65,3 @@ router.delete("/delete/:id", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-// Get brand 
-router.get("/dropdown/brands", async(req, res) =>{
-  const brands = await Inventory.distinct("brand",{quantity: {$gt:0}});
-  res.json(brands);
-});
-// Get model
-router.get("/dropdown/models", async (req, res) => {
-  const { brand } = req.query;
-  const models = await Inventory.distinct("model", {
-    brand,
-    quantity: { $gt: 0 }
-  });
-  res.json(models);
-});
-// get color
-router.get("/dropdown/colors", async (req, res) => {
-  const { brand, model, variant } = req.query;
-  const colors = await Inventory.distinct("color", {
-    brand,
-    model,
-    variant,
-    quantity: { $gt: 0 }
-  });
-  res.json(colors);
-});
-
-
-
-export default router;
