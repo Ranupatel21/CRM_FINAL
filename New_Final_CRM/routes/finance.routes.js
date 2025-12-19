@@ -43,13 +43,41 @@ router.get("/invoice/pending", async (req, res) => {
 
 // Update Invoice
 router.put("/invoice/:id", async (req, res) => {
+  try {
+    const oldInvoice = await Invoice.findById(req.params.id);
+
+    if (!oldInvoice) {
+      return res.status(404).json({ message: "Invoice not found" });
+    }
   const invoice = await Invoice.findByIdAndUpdate(
     req.params.id,
     req.body,
     { new: true }
   );
+  if (oldInvoice.status !== "Paid" && invoice.status === "Paid") {
+      const stock = await Inventory.findOneAndUpdate(
+        {
+          brand: invoice.brand,
+          model: invoice.model,
+          variant: invoice.variant,
+          color: invoice.color,
+          quantity: { $gt: 0 }
+        },
+        { $inc: { quantity: -1 } },
+        { new: true }
+      );
+        if (!stock) {
+        return res.status(400).json({
+          message: "Stock not available while finalizing invoice"
+        });
+      }
+    }
   res.json(invoice);
+    } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
+
 
 //  Delete Invoice
 router.delete("/invoice/:id", async (req, res) => {

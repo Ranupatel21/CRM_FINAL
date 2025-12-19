@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const inventorySchema = new mongoose.Schema(
   {
     carName: { type: String, required: true },
+    price: {type: Number, required: true},
     model: { type: String, required: true },
     variant: { type: String, required: true },
     color: { type: String, required: true },

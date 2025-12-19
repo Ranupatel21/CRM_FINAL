@@ -6,12 +6,29 @@ const BookingSchema = new Schema({
   customerName: String,
   phone: String,
   vehicleId: String,
-  basePrice: Number,
+  brand: {
+    type: String,
+    required: true
+  },
+  model: {
+    type: String,
+    required: true
+  },
+  variants: {
+    type: [String],
+    required: true
+  },
+  color: String,
+  bookingPrice: Number,
   discount: Number,
   accessoriesCost: Number,
   finalPrice: Number,
   bookingAmountPaid: Number,
-  status: String,
+  status: {
+  type: String,
+  enum: ["Booked","Invoiced","Delivered","Cancelled"],
+  default: "Booked"
+},
   date: { type: Date },
   createdAt: { type: Date, default: Date.now },
 });
