@@ -15,18 +15,18 @@ const router = express.Router();
 router.post("/inventory", async (req, res) => {
   const { brand, model, variant, color, quantity, price } = req.body;
 
-  const existingStock = await Inventory.findOne({
+  const inventory = await Inventory.findOne({
     brand, model, variant, color
   });
 
-  if (existingStock) {
-    existingStock.quantity += quantity;
-    if (price) existingStock.price = price;
-    await existingStock.save();
+  if (inventory) {
+    inventory.quantity += quantity;
+    if (price) inventory.price = price;
+    await inventory.save();
 
     return res.json({
       message: "Stock updated",
-      stock: existingStock
+      stock: inventory
     });
   }
 

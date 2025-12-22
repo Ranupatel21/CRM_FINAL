@@ -4,27 +4,27 @@ import {Car} from "../models/car.model.js"
 const router = express.Router();
 
 // Brand dropdown
-router.get("/cars/brands", async (req, res) => {
+router.get("/car/brands", async (req, res) => {
   const brands = await Car.distinct("brand");
   res.json(brands);
 });
 
 // Model dropdown
-router.get("/cars/models", async (req, res) => {
+router.get("/car/models", async (req, res) => {
   const { brand } = req.query;
   const models = await Car.distinct("model", { brand });
   res.json(models);
 });
 
 // Variant dropdown
-router.get("/cars/variants", async (req, res) => {
+router.get("/car/variants", async (req, res) => {
   const { brand, model } = req.query;
   const variants = await Car.distinct("variant", { brand, model });
   res.json(variants);
 });
 
 // Color dropdown
-router.get("/cars/colors", async (req, res) => {
+router.get("/car/colors", async (req, res) => {
   const { brand, model, variant } = req.query;
   const colors = await Car.distinct("color", {
     brand,

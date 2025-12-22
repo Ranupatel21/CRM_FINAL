@@ -19,6 +19,7 @@
  import hrRoutes from "./routes/hr.routes.js";
 
 
+
  const app = express();
  //app.use(cors());
  app.use(express.json());
@@ -45,8 +46,10 @@
  app.use("/api/quotations", quotationRoutes);
  app.use("/api/testdrives", testDriveRoutes);
  app.use("/api/inventory", inventoryRoutes);
+ app.use("/api/inventory", inventoryRoutes);
  app.use("/api/finance", finanaceRoutes);
  app.use("/api/hr", hrRoutes);
+ 
  const PORT = process.env.PORT || 5000;
  app.listen(PORT, () => {
   console.log(`✅ Server running at: http://localhost:${PORT}`);
