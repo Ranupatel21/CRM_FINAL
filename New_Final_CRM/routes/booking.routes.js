@@ -41,7 +41,15 @@ router.get("/bookings", async (req, res) => {
 
 // Create booking
 router.post("/bookings", async (req, res) => {
-  const booking = await Booking.create(req.body);
+  const booking = await Booking.create({
+    customerName: req.body.customerName,
+    brand: req.body.brand,
+    model: req.body.model,
+    variant: req.body.variant,
+    color: req.body.color,
+    phone: req.body.phone
+  });
+
   res.status(201).json(booking);
 });
 

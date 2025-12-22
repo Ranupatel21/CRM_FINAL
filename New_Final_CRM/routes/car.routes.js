@@ -3,43 +3,31 @@ import { Car } from "../models/car.model.js";
 
 const router = express.Router();
 
-/**
- * BRAND DROPDOWN
- */
-router.get("/brands", async (req, res) => {
+// Brand
+router.get("/car/brands", async (req, res) => {
   const brands = await Car.distinct("brand");
   res.json(brands);
 });
 
-/**
- * MODEL DROPDOWN
- */
-router.get("/models", async (req, res) => {
+// Model
+router.get("/car/models", async (req, res) => {
   const { brand } = req.query;
-
   const models = await Car.distinct("model", { brand });
   res.json(models);
 });
 
-/**
- * VARIANT DROPDOWN (NESTED)
- */
-router.get("/variants", async (req, res) => {
+// Variant (NESTED)
+router.get("/car/variants", async (req, res) => {
   const { brand, model } = req.query;
 
   const car = await Car.findOne({ brand, model });
-
-  const variants = car
-    ? car.variants.map(v => v.name)
-    : [];
+  const variants = car ? car.variants.map(v => v.name) : [];
 
   res.json(variants);
 });
 
-/**
- * COLOR DROPDOWN (NESTED)
- */
-router.get("/colors", async (req, res) => {
+// Color (NESTED)
+router.get("/car/colors", async (req, res) => {
   const { brand, model, variant } = req.query;
 
   const car = await Car.findOne({
@@ -54,5 +42,3 @@ router.get("/colors", async (req, res) => {
 
   res.json(selectedVariant?.colors || []);
 });
-
-export default router;
