@@ -15,7 +15,7 @@ const BookingSchema = new Schema({
     required: true
   },
   variants: {
-    type: [String],
+    type: String,
     required: true
   },
   color: String,
