@@ -24,9 +24,9 @@ const router = express.Router();
   router.get("/car/colors", async (req, res) => {
      const { brand, model, variant } = req.query; const colors = await Car.distinct("color", { brand, model, variant });
    res.json(colors);})
-   
+
    // Get all Bookings
-   routerouter.get("/bookings", async (req, res) => {
+   router.get("/bookings", async (req, res) => {
      const allBookings = await Booking.find()
      res.json(allBookings); });
 
