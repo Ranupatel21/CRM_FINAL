@@ -41,8 +41,8 @@
  // Routes
  app.use("/api/leads", leadRoutes);
  app.use("/api/vehicles", vehicleRoutes);
- app.use("/api/bookings", bookingRoutes);
- app.use("/api/cars", carRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/car", carRoutes);
  app.use("/api/quotations", quotationRoutes);
  app.use("/api/testdrives", testDriveRoutes);
  app.use("/api/inventory",  inventoryRoutes);

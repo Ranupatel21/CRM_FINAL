@@ -3,21 +3,21 @@ import { Car } from "../models/car.model.js";
 
 const router = express.Router();
 
-// Brand
-router.get("/car/brands", async (req, res) => {
+// BRAND
+router.get("/brands", async (req, res) => {
   const brands = await Car.distinct("brand");
   res.json(brands);
 });
 
-// Model
-router.get("/car/models", async (req, res) => {
+// MODEL
+router.get("/models", async (req, res) => {
   const { brand } = req.query;
   const models = await Car.distinct("model", { brand });
   res.json(models);
 });
 
-// Variant (NESTED)
-router.get("/car/variants", async (req, res) => {
+// VARIANT (NESTED)
+router.get("/variants", async (req, res) => {
   const { brand, model } = req.query;
 
   const car = await Car.findOne({ brand, model });
@@ -26,8 +26,8 @@ router.get("/car/variants", async (req, res) => {
   res.json(variants);
 });
 
-// Color (NESTED)
-router.get("/car/colors", async (req, res) => {
+// COLOR (NESTED)
+router.get("/colors", async (req, res) => {
   const { brand, model, variant } = req.query;
 
   const car = await Car.findOne({
@@ -36,10 +36,8 @@ router.get("/car/colors", async (req, res) => {
     "variants.name": variant
   });
 
-  const selectedVariant = car?.variants.find(
-    v => v.name === variant
-  );
-
+  const selectedVariant = car?.variants.find(v => v.name === variant);
   res.json(selectedVariant?.colors || []);
 });
+
 export default router;
