@@ -45,8 +45,7 @@
  app.use("/api/cars", carRoutes);
  app.use("/api/quotations", quotationRoutes);
  app.use("/api/testdrives", testDriveRoutes);
- app.use("/api/inventory", inventoryRoutes);
- app.use("/api/inventory", inventoryRoutes);
+ app.use("/api/inventory",  inventoryRoutes);
  app.use("/api/finance", finanaceRoutes);
  app.use("/api/hr", hrRoutes);
  
