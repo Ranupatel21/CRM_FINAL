@@ -42,3 +42,4 @@ router.get("/car/colors", async (req, res) => {
 
   res.json(selectedVariant?.colors || []);
 });
+export default router;
