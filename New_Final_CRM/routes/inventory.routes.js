@@ -74,7 +74,7 @@ router.post("/inventory", upload.single("file"), async (req, res) => {
 
 
 // 📤 EXPORT INVENTORY TO EXCEL
-router.get("/inventory/export/excel", async (req, res) => {
+router.get("/export/excel", async (req, res) => {
   try {
     const inventory = await Inventory.find().lean();
 
