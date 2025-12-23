@@ -71,14 +71,48 @@ router.post("/inventory", upload.single("file"), async (req, res) => {
 
 
 // Get ALL Inventory (Excel type list)
-router.get("/inventory", async (req, res) => {
+
+
+// 📤 EXPORT INVENTORY TO EXCEL
+router.get("/inventory/export/excel", async (req, res) => {
   try {
-    const items = await Inventory.find().sort({ updatedAt: -1 });
-    res.json(items);
+    const inventory = await Inventory.find().lean();
+
+    if (!inventory.length) {
+      return res.status(404).json({ message: "No inventory data found" });
+    }
+
+    // 👉 JSON → Excel Sheet
+    const worksheet = xlsx.utils.json_to_sheet(inventory);
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, "Inventory");
+
+    // 👉 Excel buffer
+    const buffer = xlsx.write(workbook, {
+      bookType: "xlsx",
+      type: "buffer"
+    });
+
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=inventory.xlsx"
+    );
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.send(buffer);
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({
+      message: "Excel export failed",
+      error: error.message
+    });
   }
 });
+
 
 // Update Inventory Quantity
 router.put("/update/:id", async (req, res) => {
