@@ -13,29 +13,47 @@ const router = express.Router();
 //   }
 // });
 router.post("/inventory", async (req, res) => {
-  const { brand, model, variant, color, quantity, price } = req.body;
+  try {
+    const { brand, model, variant, color, quantity, price } = req.body;
 
-  const inventory = await Inventory.findOne({
-    brand, model, variant, color
-  });
+    const inventory = await Inventory.findOne({
+      brand, model, variant, color
+    });
 
-  if (inventory) {
-    inventory.quantity += quantity;
-    if (price) inventory.price = price;
-    await inventory.save();
+    if (inventory) {
+      inventory.quantity += Number(quantity);
+      if (price) inventory.price = price;
+      await inventory.save();
 
-    return res.json({
-      message: "Stock updated",
-      stock: inventory
+      return res.status(200).json({
+        message: "Stock updated",
+        stock: inventory
+      });
+    }
+
+    const newStock = await Inventory.create({
+      brand,
+      model,
+      variant,
+      color,
+      quantity: Number(quantity),
+      price
+    });
+
+    res.status(201).json(newStock);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Inventory error",
+      error: error.message
     });
   }
-
-  const newStock = await Inventory.create(req.body);
-  res.status(201).json(newStock);
 });
 
+
 // Get ALL Inventory (Excel type list)
-router.get("/", async (req, res) => {
+router.get("/inventory", async (req, res) => {
   try {
     const items = await Inventory.find().sort({ updatedAt: -1 });
     res.json(items);
