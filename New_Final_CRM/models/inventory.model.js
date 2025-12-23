@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const inventorySchema = new mongoose.Schema(
   {
-    chachesNumber: { type: String, required: true },
+    chachesNumber: { type: String, required: true,  unique: true },
     price: {type: Number, required: true},
     model: { type: String, required: true },
     variant: { type: String, required: true },

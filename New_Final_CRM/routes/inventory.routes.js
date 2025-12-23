@@ -3,15 +3,7 @@ import { Inventory } from "../models/inventory.model.js";
 
 const router = express.Router();
 
-// Add New Inventory Item
-// router.post("/add", async (req, res) => {
-//   try {
-//     const data = await Inventory.create(req.body);
-//     res.status(201).json({ message: "Inventory added", data });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
+
 router.post("/inventory", async (req, res) => {
   try {
     const { brand, model, variant, color, quantity, price } = req.body;
@@ -31,16 +23,18 @@ router.post("/inventory", async (req, res) => {
       });
     }
 
-    const newStock = await Inventory.create({
-      brand,
-      model,
-      variant,
-      color,
-      quantity: Number(quantity),
-      price
-    });
+  const newStock = await Inventory.create({
+  chachesNumber,
+  brand,
+  model,
+  variant,
+  color,
+  quantity: Number(quantity),
+  price,
+  status: quantity > 0 ? "In Stock" : "Out of Stock"
+});
 
-    res.status(201).json(newStock);
+   res.status(201).json(newStock);
 
   } catch (error) {
     console.error(error);
