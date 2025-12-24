@@ -8,7 +8,7 @@ const router = express.Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/inventory", upload.single("file"), async (req, res) => {
+router.post("/upload", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "Excel file required" });
@@ -110,6 +110,15 @@ router.get("/export/excel", async (req, res) => {
       message: "Excel export failed",
       error: error.message
     });
+  }
+});
+// Get ALL Inventory
+router.get("/", async (req, res) => {
+  try {
+    const inventory = await Inventory.find();
+    res.status(200).json(inventory);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
