@@ -3,6 +3,35 @@ import { Inventory } from "../models/inventory.model.js";
 import multer from "multer";
 import xlsx from "xlsx";
 
+const normalize = (str = "") =>
+  str.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+//  Excel → Internal field mapping
+const FIELD_MAPPING = {
+  chachesNumber: ["chachesnumber", "chassisno", "chassis", "vin"],
+  brand: ["brand", "make", "company"],
+  model: ["model", "carmodel"],
+  variant: ["variant", "trim"],
+  color: ["color", "colour"],
+  quantity: ["quantity", "qty", "count"],
+  price: ["price", "amount", "cost"]
+};
+
+//  Main mapper
+const mapExcelRow = (row) => {
+  const mapped = {};
+
+  for (const key in FIELD_MAPPING) {
+    for (const excelKey in row) {
+      if (FIELD_MAPPING[key].includes(normalize(excelKey))) {
+        mapped[key] = row[excelKey];
+        break;
+      }
+    }
+  }
+
+  return mapped;
+};
 
 const router = express.Router();
 
@@ -21,15 +50,18 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     );
 
     for (const item of sheetData) {
-      const {
-        chachesNumber,
-        brand,
-        model,
-        variant,
-        color,
-        quantity,
-        price
-      } = item;
+     const mappedItem = mapExcelRow(item);
+
+const {
+  chachesNumber,
+  brand,
+  model,
+  variant,
+  color,
+  quantity,
+  price
+} = mappedItem;
+
 
       if (!chachesNumber || !model || !variant || !color || !price) continue;
 
@@ -48,7 +80,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
           model,
           variant,
           color,
-          quantity: Number(quantity),
+          quantity: Number(quantity || 0),
           price,
           status: quantity > 0 ? "In Stock" : "Out of Stock"
         });
@@ -68,12 +100,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-
-
-// Get ALL Inventory (Excel type list)
-
-
-// 📤 EXPORT INVENTORY TO EXCEL
+//  EXPORT INVENTORY TO EXCEL
 router.get("/export/excel", async (req, res) => {
   try {
     const inventory = await Inventory.find().lean();
