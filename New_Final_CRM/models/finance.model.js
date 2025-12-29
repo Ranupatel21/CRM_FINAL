@@ -17,7 +17,22 @@ const invoiceSchema = new mongoose.Schema(
       unique: true
     },
 
-    amount: {
+    subTotal: {
+      type: Number,
+      required: true   // amount before GST
+    },
+
+    gstRate: {
+      type: Number,
+      default: 18      // %
+    },
+
+    gstAmount: {
+      type: Number,
+      required: true
+    },
+
+    totalAmount: {
       type: Number,
       required: true
     },
@@ -39,6 +54,7 @@ const invoiceSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
  
    //2. LOAN SCHEMA

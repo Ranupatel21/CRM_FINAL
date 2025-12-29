@@ -3,13 +3,33 @@ import { Invoice, Loan, Commission } from "../models/finance.model.js";
 
 const router = express.Router();
 
-// Create Invoice
-router.post("/invoice", async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
-    const invoice = await Invoice.create(req.body);
-    res.status(201).json(invoice);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const {
+      clientName,
+      invoiceNumber,
+      subTotal,
+      gstRate = 18,
+      dueDate
+    } = req.body;
+
+    const gstAmount = (subTotal * gstRate) / 100;
+    const totalAmount = subTotal + gstAmount;
+
+    const invoice = await Invoice.create({
+      clientName,
+      invoiceNumber,
+      subTotal,
+      gstRate,
+      gstAmount,
+      totalAmount,
+      dueDate,
+      status: "Pending"
+    });
+
+    res.status(201).json({ message: "Invoice created", invoice });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
